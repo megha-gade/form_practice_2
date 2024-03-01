@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Form</title>
+
+</head>
+<body>
+
+    <form (ngSubmit)="clickedMethod()" #myForm="ngForm">
+<!-- ggrouping start -->
+<div ngModelGroup="personalDetails" #personalDetails="ngModelGroup">
+
+  <label for="name">Name:</label>
+<!--  -->
+  <input type="text" id="name" name="name" ngModel #fname="ngModel" required="" [(ngModel)]="fNameEntered" >
+
+<!--
+  <div><small *ngIf="fNameEntered!=''">You Entered {{fNameEntered}}</small></div>
+<div *ngIf="fname.touched && fname.invalid"><small>Name Field is required</small></div> -->
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" ngModel email required="">
+
+
+  <label for="email">DOB:</label>
+  <input type="date" id="dob" name="dob" ngModel required="">
+<!-- grouping end -->
+
+
+<!-- button to set the default values -->
+<button (click)="setDefalutValues()">set Default Values</button>
+
+<!-- validation rule (task) -->
+<div
+*ngIf="personalDetails.invalid && personalDetails.touched"><small>Some of the fields are empty or not valid</small></div>
+</div>
+
+
+<!-- gender div -->
+
+<!-- how to provide the default vaue to the radio button -->
+<div>Gender</div>
+<div *ngFor="let gen of gender">
+
+<span for="">{{gen.value}}</span>
+<input
+class="label"
+ type="radio"
+  id="{{gen.id}}"
+   name="gender"
+    value="{{gen.value}}"
+    [ngModel]="defaultGender">
+</div>
+
+
+
+
+<!-- <span  for="female">Female</span>
+<input class="label" type="radio" id="female" name="gender" value="female">
+
+<span  for="other">Other</span>
+<input class="label" type="radio" id="other" name="gender" value="other"> -->
+
+<!-- gender div -->
+
+
+        <label for="course">Select Course:</label>
+        <select name="course" id="course"[(ngModel)]="defaultValue">
+            <option value="javascript">JavaScript</option>
+            <option value="java">Java</option>
+            <option value="angular">Angular</option>
+        </select>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="4" ngModel [(ngModel)]="defaultMessage"></textarea>
+<br>
+
+        <button type="submit">Submit</button>
+<!-- [disabled]="!myForm.valid" -->
+</form>
+
+
+<!-- TO SHOW USER ENTERED  DETAILS  -->
+
+<div>
+<h1 style="text-align: center;">Form Details</h1>
+<h3>Form Date : {{newDate}}</h3>
+<h4>User Name : {{firstName}}  {{fNameEntered}}</h4>
+<h4>User DOB : {{data?.value.personalDetails.dob}}</h4>
+<h4>User Email : {{data?.value.personalDetails.email}}</h4>
+<h4>User Selected Course : {{data?.value.course}}</h4>
+<h4>User Gender : {{data?.value.gender}}</h4>
+<p>User Message : {{defaultMessage}}</p>
+</div>
+
+</body>
+</html>
